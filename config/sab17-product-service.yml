@@ -6,28 +6,27 @@ spring:
     url: jdbc:mysql://localhost:3306/sab17
     username: root
     password: root
-  
-   jpa:
+
+  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  
-  
+
   application:
     name: sab17-product-service
 
 kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: my-product
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  bootstrap-servers: localhost:9092
+  consumer:
+    group-id: my-product
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-  # Actuator (for health checks and metrics)
+# Actuator (for health checks and metrics)
 management:
   endpoints:
     web:

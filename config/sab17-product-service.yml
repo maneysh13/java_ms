@@ -39,12 +39,28 @@ management:
 # Resilience4j for Circuit Breaker configuration
 resilience4j:
   circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true  # Registers health indicators to check circuit breaker state
+        slidingWindowSize: 10  # Number of calls to measure failure rate
+        failureRateThreshold: 50  # Threshold percentage of failures to open the circuit breaker
+        waitDurationInOpenState: 10000  # Wait time (in milliseconds) before attempting to close the circuit
+        permittedNumberOfCallsInHalfOpenState: 5  # Number of permitted calls when the circuit is half-open
+        slidingWindowType: COUNT_BASED  # Can be TIME_BASED or COUNT_BASED
+        minimumNumberOfCalls: 5  # Minimum number of calls before the circuit can calculate the failure rate
+        automaticTransitionFromOpenToHalfOpenEnabled: true  # Automatically transition from OPEN to HALF_OPEN after wait time
     instances:
-      myService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10000
+      sab17-product-service:
+        baseConfig: default  # Apply default configuration for sab17-product-service
+
+  retry:
+    instances:
+      sab17-product-service:
+        maxAttempts: 3  # Number of retry attempts in case of failure
+        waitDuration: 1000  # Wait duration (in milliseconds) between retry attempts
+        retryExceptions:
+          - java.io.IOException  # List of exceptions that trigger a retry
+
 
 eureka:
   client:

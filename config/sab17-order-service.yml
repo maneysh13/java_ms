@@ -8,3 +8,4 @@ spring:
     password: root
   application:
     name: sab17-product-service
+ 

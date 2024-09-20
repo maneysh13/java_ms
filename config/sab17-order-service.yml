@@ -19,6 +19,7 @@ kafka:
   bootstrap-servers: localhost:9092
   consumer:
     group-id: my-product
+    auto-offset-reset: earliest  # Ensure this is set so the consumer starts from the earliest offset
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     properties:

@@ -22,11 +22,11 @@ kafka:
     auto-offset-reset: earliest
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-     value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+    value-deserializer: org.apache.kafka.common.serialization.JsonDeserializer
   producer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     # value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+    value-deserializer: org.apache.kafka.common.serialization.JsonDeserializer
 
 # Actuator (for health checks and metrics)
 management:

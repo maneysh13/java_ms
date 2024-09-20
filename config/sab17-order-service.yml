@@ -21,10 +21,13 @@ kafka:
     group-id: my-product
     auto-offset-reset: earliest
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    value-deserializer: org.apache.kafka.common.serialization.JsonDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
   producer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    properties:
+      spring.json.trusted.packages: "com.sab17.sab17_order_service.entities"
 
 # Actuator (for health checks and metrics)
 management:

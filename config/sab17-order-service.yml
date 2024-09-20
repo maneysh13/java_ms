@@ -21,12 +21,10 @@ kafka:
     group-id: my-product
     auto-offset-reset: earliest
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     value-deserializer: org.apache.kafka.common.serialization.JsonDeserializer
   producer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    # value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    value-deserializer: org.apache.kafka.common.serialization.JsonDeserializer
+    value-serializer: org.apache.kafka.common.serialization.JsonSerializer
 
 # Actuator (for health checks and metrics)
 management:

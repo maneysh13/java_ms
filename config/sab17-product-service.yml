@@ -6,43 +6,30 @@ spring:
     url: jdbc:mysql://localhost:3306/sab17
     username: root
     password: root
-
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
   application:
     name: sab17-product-service
 
-# kafka:
-#   bootstrap-servers: localhost:9092
-#   consumer:
-#     group-id: my-product
-#     auto-offset-reset: earliest
-#     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#     value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#   producer:
-#     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#     value-serializer: org.apache.kafka.common.serialization.StringSerializer
- kafka:
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer:  org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      bootstrap-servers: localhost:9092
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: demo
-      auto-offset-reset: latest
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: com.sab17.sab17_product_service.dto
+kafka:
+  producer:
+    bootstrap-servers: localhost:9092
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  consumer:
+    bootstrap-servers: localhost:9092
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    group-id: demo
+    auto-offset-reset: latest
+    properties:
+      spring:
+        json:
+          trusted:
+            packages: com.sab17.sab17_product_service.dto
 
-# Actuator (for health checks and metrics)
 management:
   endpoints:
     web:
@@ -52,31 +39,29 @@ management:
     health:
       show-details: always
 
-# Resilience4j for Circuit Breaker configuration
 resilience4j:
   circuitbreaker:
     configs:
       default:
-        registerHealthIndicator: true  # Registers health indicators to check circuit breaker state
-        slidingWindowSize: 10  # Number of calls to measure failure rate
-        failureRateThreshold: 50  # Threshold percentage of failures to open the circuit breaker
-        waitDurationInOpenState: 10000  # Wait time (in milliseconds) before attempting to close the circuit
-        permittedNumberOfCallsInHalfOpenState: 5  # Number of permitted calls when the circuit is half-open
-        slidingWindowType: COUNT_BASED  # Can be TIME_BASED or COUNT_BASED
-        minimumNumberOfCalls: 5  # Minimum number of calls before the circuit can calculate the failure rate
-        automaticTransitionFromOpenToHalfOpenEnabled: true  # Automatically transition from OPEN to HALF_OPEN after wait time
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000 # 10 seconds
+        permittedNumberOfCallsInHalfOpenState: 5
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
     instances:
       sab17-product-service:
-        baseConfig: default  # Apply default configuration for sab17-product-service
+        baseConfig: default
 
   retry:
     instances:
       sab17-product-service:
-        maxAttempts: 3  # Number of retry attempts in case of failure
-        waitDuration: 1000  # Wait duration (in milliseconds) between retry attempts
+        maxAttempts: 3
+        waitDuration: 1000
         retryExceptions:
-          - java.io.IOException  # List of exceptions that trigger a retry
-
+          - java.io.IOException
 
 eureka:
   client:
